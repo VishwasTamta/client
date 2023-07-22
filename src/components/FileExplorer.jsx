@@ -29,12 +29,12 @@ const FileExplorer = () => {
       if (data?.isEnd) return;
       if (data?.folders?.length > 0) {
         if (page > 0) {
-          setFolders((prev) => [...prev, data?.folders]);
+          setFolders((prev) => [...prev, ...data?.folders]);
         } else {
           setFolders(data?.folders);
         }
-      } else {
-        setFolders(data?.folders);
+      } else{
+        dispatch(setInitialPath())
       }
     };
     getFolders();

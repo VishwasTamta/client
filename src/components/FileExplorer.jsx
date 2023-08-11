@@ -6,12 +6,15 @@ import {
   selectPath,
   setCompletePath,
 } from "../redux/slice/fileSlice";
+import { useNavigate } from "react-router-dom";
 
 const FileExplorer = () => {
   const [folders, setFolders] = useState([]);
   const path = useSelector(selectPath);
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getFolders = async () => {
@@ -24,7 +27,13 @@ const FileExplorer = () => {
       });
       const data = await response.json();
       if (data?.status === 400) {
-        window.open(`http://localhost:8080/folders${path.join("/")}`);
+        navigate("/file_view", {
+          state: {
+            fileName: path[path.length - 1],
+            folders: folders.filter((e) => e !== path[path.length - 1]),
+          },
+        });
+        // window.open(`http://localhost:8080/folders${path.join("/")}`);
       }
       if (data?.isEnd) return;
       if (data?.folders?.length > 0) {
@@ -33,8 +42,8 @@ const FileExplorer = () => {
         } else {
           setFolders(data?.folders);
         }
-      } else{
-        dispatch(setInitialPath())
+      } else {
+        dispatch(setInitialPath());
       }
     };
     getFolders();

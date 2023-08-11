@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import DirView from "./scenes/DirView";
-import TableView from "./scenes/TableView";
+import { DirView, FileView, TableView } from "./scenes";
 
 function App() {
   return (
@@ -8,6 +7,7 @@ function App() {
       <Routes>
         <Route path="/dir_view" element={<DirView />} />
         <Route path="/table_view" element={<TableView />} />
+        <Route path="/file_view" element={<FileView />} />
       </Routes>
     </div>
   );
